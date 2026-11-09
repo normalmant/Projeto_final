@@ -27,6 +27,42 @@ app.get("/aula", async (req,res)=>{
 
 
 
+app.post("/aula", async(req,res)=>{
+
+    try{
+
+        const dados= req.body
+
+        const resultado=await db.pool.query(
+            "INSERT INTO aula (serie, turma, componente, professor) VALUES(?,?,?,?)",
+             [dados.serie,dados.turma,dados.componente, dados.professor]
+            )
+            res.status(201).json({resultado:"Aula cadastrada, ID= "+resultado[0].insertId})
+
+
+
+
+
+
+
+    }catch(erro){
+
+        res.status(500).json({erro:erro.message})
+
+
+    }
+
+
+})
+
+
+
+
+
+
+
+
+
 app.listen(port, ()=>{
     console.log("API rodando na porta" + port)
 })
