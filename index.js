@@ -38,13 +38,43 @@ app.post("/aula", async(req,res)=>{
              [dados.serie,dados.turma,dados.componente, dados.professor]
             )
             res.status(201).json({resultado:"Aula cadastrada, ID= "+resultado[0].insertId})
+    }catch(erro){
+
+        res.status(500).json({erro:erro.message})
 
 
+    }
 
 
+})
 
 
+app.get("/horario", async (req,res)=>{
+    //conectar com o Banco de Dados
+    try{
 
+        const resultado= await db.pool.query("SELECT * FROM horario_aula")
+        res.status(200).json(resultado[0])
+
+    }catch(erro){
+        res.status(500).json({erro: erro.message})
+    }
+
+
+})
+
+
+app.post("/horario", async(req,res)=>{
+
+    try{
+
+        const dados= req.body
+
+        const resultado=await db.pool.query(
+            "INSERT INTO aula (idaula, dia_semana, ordem) VALUES(?,?,?)",
+             [dados.idaula,dados.dia_semana,dados.ordem, ]
+            )
+            res.status(201).json({resultado:"Aula cadastrada, ID= "+resultado[0].insertId})
     }catch(erro){
 
         res.status(500).json({erro:erro.message})

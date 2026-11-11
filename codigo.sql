@@ -1,3 +1,4 @@
+-- Active: 1794393282901@@127.0.0.1@3306@2dsb
 DROP TABLE aula;
 DROP TABLE horario_aula;
 CREATE TABLE aula
