@@ -48,7 +48,7 @@ app.post("/aula", async(req,res)=>{
 
 })
 
-
+//VER HORARIOS_AULAS
 app.get("/horario", async (req,res)=>{
     //conectar com o Banco de Dados
     try{
@@ -63,7 +63,7 @@ app.get("/horario", async (req,res)=>{
 
 })
 
-
+//ADICIONAR HORARIos-AUlAS
 app.post("/horario", async(req,res)=>{
 
     try{
@@ -71,7 +71,7 @@ app.post("/horario", async(req,res)=>{
         const dados= req.body
 
         const resultado=await db.pool.query(
-            "INSERT INTO aula (idaula, dia_semana, ordem) VALUES(?,?,?)",
+            "INSERT INTO horario_aula (idaula, dia_semana, ordem) VALUES(?,?,?)",
              [dados.idaula,dados.dia_semana,dados.ordem, ]
             )
             res.status(201).json({resultado:"Aula cadastrada, ID= "+resultado[0].insertId})
@@ -86,6 +86,7 @@ app.post("/horario", async(req,res)=>{
 })
 
 
+//APAGAR HORARIO_AULAS
 
 
 

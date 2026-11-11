@@ -1,4 +1,4 @@
--- Active: 1794393282901@@127.0.0.1@3306@2dsb
+
 DROP TABLE aula;
 DROP TABLE horario_aula;
 CREATE TABLE aula
@@ -18,7 +18,14 @@ CREATE TABLE horario_aula
 );
 ALTER TABLE horario_aula ADD FOREIGN KEY(idaula) REFERENCES aula (id);
 INSERT INTO aula (serie, turma, componente, professor) VALUES
-("2º", "DSB", "Programação Back End", "Ronaldo");
+("2º", "DSB", "Português", "Carolina");
 DELETE FROM aula WHERE id = 10;
-UPDATE aula SET professor = "Patrick";
+UPDATE aula SET professor = "Patrick" WHERE id=1;
 SELECT * FROM aula;
+
+
+INSERT INTO horario_aula(idaula,dia_semana,ordem)VALUES(
+    1,
+    "segunda",
+    3
+)
