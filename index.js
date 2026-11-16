@@ -96,12 +96,15 @@ app.delete("/horario/:id", async(req,res)=>
 
 
            
-            const resultado=await db.pool.query(
+            const [resultado]=await db.pool.query(
                     'DELETE FROM horario_aula WHERE ID= ?',
                     [id])
 
-                    //VERIFICAR AFFECT ROWS
 
+                    if(resultado.affectedRows===0){
+
+                        return res.status(401).json({erro: `Horário não encontrada ${id}`})
+                    }
                     res.status(201).json({resultado:`Aula ${id} apagada com sucesso`})
                     console.log(resultado)
             
