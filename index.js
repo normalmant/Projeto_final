@@ -5,7 +5,8 @@ const port=3000
 
 
 
-const db= require("./db")
+const db= require("./db");
+const res = require('express/lib/response');
 
 
 
@@ -87,6 +88,34 @@ app.post("/horario", async(req,res)=>{
 
 
 //APAGAR HORARIO_AULAS
+app.delete("/horario/:id", async(req,res)=>
+    {
+
+        try{
+            const id=req.params.id
+
+
+           
+            const resultado=await db.pool.query(
+                    'DELETE FROM horario_aula WHERE ID= ?',
+                    [id])
+
+                    //VERIFICAR AFFECT ROWS
+
+                    res.status(201).json({resultado:`Aula ${id} apagada com sucesso`})
+                    console.log(resultado)
+            
+    
+        
+        }catch(erro){
+            res.status(500).json({erro:erro.message})
+        }   
+
+
+
+})
+
+
 
 
 
