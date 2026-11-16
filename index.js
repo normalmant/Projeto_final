@@ -100,7 +100,6 @@ app.delete("/horario/:id", async(req,res)=>
                     'DELETE FROM horario_aula WHERE ID= ?',
                     [id])
 
-
                     if(resultado.affectedRows===0){
 
                         return res.status(401).json({erro: `Horário não encontrada ${id}`})
@@ -114,10 +113,49 @@ app.delete("/horario/:id", async(req,res)=>
             res.status(500).json({erro:erro.message})
         }   
 
+})
+
+
+
+app.put("/horario/:id",async(req,res)=>{
+
+    const id = req.params.id
+    const {idaula, dia_semana,ordem}= req.body
+
+
+
+
+    try{
+
+    const [verificar] = await db.pool.query(
+    'SELECT id FROM horario_aula WHERE idaula = ?',
+    [idaula]
+)
+
+    if(verificar.length===0){
+        return res.status(401).json({erro: `Não há aulas para cadastrar esse horário ${id}`})
+    }
+
+
+
+        const [resultado] = await db.pool.query(
+        'UPDATE horario_aula SET idaula=?, dia_semana = ?, ordem = ? WHERE id=?',
+        [idaula,dia_semana,ordem,id]
+    )
+
+         if(resultado.affectedRows===0){
+
+        return res.status(401).json({erro: `Não foi possível fazer alterações ${id}`})
+      }
+         res.status(200).json({resposta: `ATUALIZAÇÃO DO ${id} FEITA COM SUCESSO`})
+    } catch(erro){
+        res.status(500).json({erro:`ERRO NO SERVIDOR`})
+    }
+
+
 
 
 })
-
 
 
 
